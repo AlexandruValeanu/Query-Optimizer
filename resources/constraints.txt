@@ -1,5 +1,6 @@
-|R|=10
-|S|=10
-|A,B|=8
-|B|=8
-|C|=8
+size(R)=10
+size(S)=10
+size(A,B)=8
+size(B)=8
+size(C)=8
+sel(R,S)=0.5

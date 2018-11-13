@@ -1,6 +1,6 @@
 package utils
 
-import constraints.SizeConstraint
+import constraints.{Constraint, SelectivityConstraint, SizeConstraint}
 import fivm.frontend.SQL
 import fivm.frontend.SQL.{TableJoin, TableNamed}
 import relation.{Relation, Variable}
@@ -52,16 +52,19 @@ object Utils {
   def getVariables(query: SQL.Query, sqlSystem: SQL.System): List[Variable] =
     processQuery(query, sqlSystem)._2
 
-  def readConstraintsFile(pathToFIle: String, relations: List[Relation], variables: List[Variable]): List[SizeConstraint] = {
+  def readConstraintsFile(pathToFIle: String, relations: List[Relation], variables: List[Variable]): List[Constraint] = {
     val filename = pathToFIle
-    val constraints = ArrayBuffer.empty[SizeConstraint]
+    val constraints = ArrayBuffer.empty[Constraint]
 
     for (line <- Source.fromFile(filename).getLines) {
       val tokens = line.split("=")
       assert(tokens.length == 2)
 
-      if (tokens(0).startsWith("|") && tokens(0).endsWith("|")){
+      if (tokens(0).startsWith("size")){
         constraints += SizeConstraint.apply(line, relations, variables)
+      }
+      else if (tokens(0).startsWith("sel")){
+        constraints += SelectivityConstraint.apply(line, relations, variables)
       }
     }
 

@@ -1,12 +1,12 @@
 package solvers
 
 import com.google.ortools.linearsolver.MPSolver
-import constraints.SizeConstraint
+import constraints.Constraint
 import relation.Variable
 
 object LPSolver {
 
-  def solve(variables: List[Variable], constraints: List[SizeConstraint], intLP: Boolean = false): Unit = {
+  def solve(variables: List[Variable], constraints: List[Constraint], intLP: Boolean = false): Unit = {
     val solverType =
       if (intLP){
         "SCIP_MIXED_INTEGER_PROGRAMMING"
@@ -38,7 +38,7 @@ object LPSolver {
     objective.setMinimization()
 
     for (constraint <- constraints){
-      objective.setCoefficient(weightMap(constraint), Math.log(constraint.size))
+      objective.setCoefficient(weightMap(constraint), Math.log(constraint.value))
     }
 
     for (variable <- variables){
