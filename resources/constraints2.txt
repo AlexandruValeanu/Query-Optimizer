@@ -1,0 +1,8 @@
+size(R)=4
+size(S)=4
+size(T)=3
+size(U)=3
+
+--size(R)=n^2
+--size(S)=n^4
+--size(T)=n^5

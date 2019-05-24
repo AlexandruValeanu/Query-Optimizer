@@ -1,6 +1,5 @@
 size(R)=10
 size(S)=10
-size(A,B)=8
-size(B)=8
-size(C)=8
+size(T)=10
+size(A,C)=5
 sel(R,S)=0.5

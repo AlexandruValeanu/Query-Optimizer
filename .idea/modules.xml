@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/Query Optimizer.iml" filepath="$PROJECT_DIR$/.idea/modules/Query Optimizer.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/query-optimizer-build.iml" filepath="$PROJECT_DIR$/.idea/modules/query-optimizer-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Query Optimizer-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Query Optimizer-build.iml" />
     </modules>
   </component>
 </project>

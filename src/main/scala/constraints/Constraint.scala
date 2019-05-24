@@ -2,6 +2,6 @@ package constraints
 
 import relation.Relation
 
-class Constraint(val relation: Relation, val value: Double) {
+abstract class Constraint(val relation: Relation, val value: Double) {
 
 }

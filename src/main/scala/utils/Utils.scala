@@ -57,14 +57,16 @@ object Utils {
     val constraints = ArrayBuffer.empty[Constraint]
 
     for (line <- Source.fromFile(filename).getLines) {
-      val tokens = line.split("=")
-      assert(tokens.length == 2)
+      if (!line.startsWith("--") && line.length > 0){
+        val tokens = line.split("=")
+        assert(tokens.length == 2)
 
-      if (tokens(0).startsWith("size")){
-        constraints += SizeConstraint.apply(line, relations, variables)
-      }
-      else if (tokens(0).startsWith("sel")){
-        constraints += SelectivityConstraint.apply(line, relations, variables)
+        if (tokens(0).startsWith("size")){
+          constraints += SizeConstraint.apply(line, relations, variables)
+        }
+        else if (tokens(0).startsWith("sel")){
+          constraints += SelectivityConstraint.apply(line, relations, variables)
+        }
       }
     }
 

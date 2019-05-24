@@ -1,6 +1,7 @@
 import fivm.frontend.SQLParser
 import solvers.LPSolver
 import utils.Utils
+import variable_order.VariableOrder
 
 object Main {
 
@@ -13,32 +14,32 @@ object Main {
 
     val (relations, variables) = Utils.processQuery(query, sqlSystem)
 
-    println(relations)
-    println(variables)
-
     val constraints = Utils.readConstraintsFile("resources/constraints.txt", relations, variables)
 
-    println(constraints)
+    LPSolver.solve(variables, constraints)
 
-    LPSolver.solve(variables, constraints, intLP = false)
+    VariableOrder.compute(variables, relations, query)
+
+//    println(constraints)
+//    LPSolver.solve(variables, constraints, intLP = false)
   }
 
   val testSQL =
-    """|CREATE TABLE R(A int, B int)
+    """|CREATE TABLE R(A int, B int, C int)
        |FROM FILE 'experiments/data/r.dat' LINE DELIMITED
        |csv ();
 
-       |CREATE TABLE S(B int, C int)
+       |CREATE TABLE S(A int, B int, D int)
        |FROM FILE 'experiments/data/s.dat' LINE DELIMITED
        |csv ();
 
-       |CREATE TABLE T(C int, D int)
+       |CREATE TABLE T(A int, E int)
        |FROM FILE 'experiments/data/t.dat' LINE DELIMITED
        |csv ();
 
-       |CREATE TABLE U(C int, D int)
+       |CREATE TABLE U(E int, F int)
        |FROM FILE 'experiments/data/t.dat' LINE DELIMITED
        |csv ();
 
-       |SELECT * FROM R NATURAL JOIN S;""".stripMargin
+       |SELECT * FROM R NATURAL JOIN S NATURAL JOIN T;""".stripMargin
 }

@@ -1,8 +1,11 @@
 package constraints
 
+import expression.ArithmeticParser
 import relation.{Relation, Variable}
 
 import scala.collection.mutable.ArrayBuffer
+import scala.util.control.Exception.allCatch
+
 
 class SizeConstraint(relation: Relation, value: Double) extends Constraint(relation, value) {
 
@@ -11,12 +14,23 @@ class SizeConstraint(relation: Relation, value: Double) extends Constraint(relat
 
 object SizeConstraint {
 
+  def isDoubleNumber(s: String): Boolean = (allCatch opt s.toDouble).isDefined
+
   def apply(expression: String, relations: List[Relation], variables: List[Variable]): SizeConstraint = {
     val tokens = expression.split("=")
     assert(tokens.length == 2)
 
     val expr = tokens(0)
-    val size = tokens(1).toInt
+    var size = 0.0
+
+    if (isDoubleNumber(tokens(1))){
+      size = tokens(1).toDouble
+    }
+    else{
+      val values = Map.empty[String, Double].updated("n", Math.E)
+
+      size = ArithmeticParser.eval(tokens(1), values).get
+    }
 
     val e = expr.substring("size(".length, expr.length - 1)
     val elems = e.split(",")
